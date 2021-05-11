@@ -19,8 +19,7 @@ export default class App extends Component {
     }
 
     //Render function returns upper tab with title and button to change user
-    render() {
-        return (
+    render = () =>
             <div>
                 <h4 className="bg-primary text-white text-center p2">
                     Tasks List of user { this.state.userName }
@@ -30,6 +29,4 @@ export default class App extends Component {
                     Change user
                 </button>
             </div>
-        )
     };
-}
