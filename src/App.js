@@ -27,13 +27,12 @@ export default class App extends Component {
     createNewTodo = (task) => {
         if (!this.state.todoStuff.find(item => item.action === task)) {
                 this.setState({
-                todoStuff: [...this.state.todoStuff, { action: task, done: false}],
-                newItemText: ""
-            });
+                todoStuff: [...this.state.todoStuff, { action: task, done: false}]
+            }, () => localStorage.setItem("todos", JSON.stringify(this.state)));
         }
     }
 
-    //methods for retrieving and displaying tasks in table
+    //methods for retrieving and displaying tasks in table if there is no saved data in local storage
     toggleTodo = (todo) => this.setState({
         todoStuff:
             this.state.todoStuff.map(item => item.action === todo.action
@@ -43,6 +42,20 @@ export default class App extends Component {
     todoTableRows = (doneValue) => this.state.todoStuff
         .filter(item => item.done === doneValue).map(item =>
             <TodoRow key={item.action} item={item} callback={this.toggleTodo} />)
+
+    savedComponent = () => {
+        let data = localStorage.getItem("todos");
+        this.setState(data != null
+            ? JSON.parse(data)
+            : {
+                userName: "Linux Kyrios",
+                todoStuff: [{action: "Check out the arrival of Macs with the new M2 processors", done: false},
+                            {action: "Start looking for a new car", done: false},
+                            {action: "Buy the biggest delicous Buenos Nachos Pizza", done: true},
+                            {action: "Remove ex number from my telephone", done: false}],
+                showCompleted: true
+            });
+    }
 
     //Render function returns upper tab with title and button to add new task
     //Added displaing table with tasks

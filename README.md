@@ -1,3 +1,9 @@
+## Project completed 11.05.2021 - all functionalities working:
+- Creating new Tasks;
+- Marks task as completed;
+- If task is completed, it is moved to new table with completed tasks;
+- Uses local storage to save data;
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
