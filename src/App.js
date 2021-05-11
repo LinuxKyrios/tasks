@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
-//import './App.css';
 
 export default class App extends Component {
 
@@ -17,7 +15,7 @@ export default class App extends Component {
     }
 
     //Method for update new text value
-    updateNewTextvalue = (event) => {
+    updateNewTextValue = (event) => {
         this.setState({ newItemText: event.target.value });
     }
 
@@ -33,7 +31,24 @@ export default class App extends Component {
         }
     }
 
+    //methods for retrieving and displaying tasks in table
+    toggleTodo = (todo) => this.setState({
+        todoStuff:
+            this.state.todoStuff.map(item => item.action === todo.action
+                ? { ...item, done: !item.done } : item)
+    });
+
+    todoTableRows = () => this.state.todoStuff.map(item =>
+        <tr key={ item.action }>
+            <td>{ item.action }</td>
+            <td>
+                <input type="checkbox" checked={item.done}
+                    onChange={() => this.toggleTodo(item)} />
+            </td>
+        </tr>);
+
     //Render function returns upper tab with title and button to add new task
+    //Added displaing table with tasks
     render = () =>
             <div>
                 <h4 className="bg-primary text-white text-center p-2">
@@ -50,6 +65,12 @@ export default class App extends Component {
                                 onClick={this.createNewTodo}>Add new</button>
                             </p>
                     </div>
+                    <table className="table table-stripped table-bordered">
+                        <thead>
+                            <tr><th>Description</th><th>Accomplished?</th></tr>
+                        </thead>
+                        <tbody>{this.todoTableRows()}</tbody>
+                    </table>
                 </div>
             </div>
     };
