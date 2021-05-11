@@ -18,6 +18,7 @@ export default class App extends Component {
         })
     }
 
+    //Render function returns upper tab with title and button to change user
     render() {
         return (
             <div>
