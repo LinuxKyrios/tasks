@@ -15,15 +15,14 @@ export class TodoCreator extends Component {
 
     createNewTodo = () => {
         this.props.callback(this.state.newItemText);
-        this.setState({ newItemText = ""});
+        this.setState({ newItemText: ""});
     }
 
-    render = () => {
+    render = () =>
         <div className="my-1">
             <input className="form-control" value={this.state.newItemText}
                 onChange={this.updateNewTextValue} />
             <button className="btn btn-primary mt-1"
                 onClick={this.createNewTodo}>New task</button>
         </div>
-    }
 }
