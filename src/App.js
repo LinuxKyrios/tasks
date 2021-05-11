@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { TodoBanner } from "./TodoBanner";
+import { TodoCreator } from "./TodoCreator";
+import { TodoRow } from "./TodoRow";
 
 export default class App extends Component {
 
@@ -10,7 +13,7 @@ export default class App extends Component {
                         {action: "Start looking for a new car", done: false},
                         {action: "Buy the biggest delicous Buenos Nachos Pizza", done: true},
                         {action: "Remove ex number from my telephone", done: false}],
-            newItemText: ""
+            //newItemText: ""
         }
     }
 
@@ -20,12 +23,10 @@ export default class App extends Component {
     }
 
     //Method for creating new to do task and add it to array
-    createNewTodo = () => {
-        if (!this.state.todoStuff
-            .find(item => item.action === this.state.newItemText)) {
+    createNewTodo = (task) => {
+        if (!this.state.todoStuff.find(item => item.action === task)) {
                 this.setState({
-                todoStuff: [...this.state.todoStuff,
-                    { action: this.state.newItemText, done: false}],
+                todoStuff: [...this.state.todoStuff, { action: task, done: false}],
                 newItemText: ""
             });
         }
@@ -39,32 +40,15 @@ export default class App extends Component {
     });
 
     todoTableRows = () => this.state.todoStuff.map(item =>
-        <tr key={ item.action }>
-            <td>{ item.action }</td>
-            <td>
-                <input type="checkbox" checked={item.done}
-                    onChange={() => this.toggleTodo(item)} />
-            </td>
-        </tr>);
+        <TodoRow key={item.action} item={item} callback={this.toggleTodo} />)
 
     //Render function returns upper tab with title and button to add new task
     //Added displaing table with tasks
     render = () =>
             <div>
-                <h4 className="bg-primary text-white text-center p-2">
-                    Tasks List of user { this.state.userName }
-                    (Task List: {this.state.todoStuff.filter(t => !t.done).length})
-                </h4>
+                <TodoBanner name={this.state.userName} tasks={this.state.todoStuff} />
                 <div className="container-fluid">
-                    <div className="my-1">
-                        <input classname="form-control"
-                            value={this.state.newItemText}
-                            onChange={this.updateNewTextValue} />
-                            <p>
-                                <button className="btn btn-primary mt-1"
-                                onClick={this.createNewTodo}>Add new</button>
-                            </p>
-                    </div>
+                    <TodoCreator callback={this.createNewTodo} />
                     <table className="table table-stripped table-bordered">
                         <thead>
                             <tr><th>Description</th><th>Accomplished?</th></tr>
